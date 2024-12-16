@@ -13,6 +13,8 @@ This is the first interaction between the taker and the maker. The taker sends a
 }
 ```
 
+Approximate maximum message size: 8 bytes
+
 ## MakerHello
 
 The maker responds to the taker's `TakerHello` message with a `MakerHello` message. This message contains the maker's protocol version range, allowing the taker to verify compatibility.
@@ -23,6 +25,8 @@ The maker responds to the taker's `TakerHello` message with a `MakerHello` messa
     protocol_version_max: u32
 }
 ```
+
+Approximate maximum message size: 8 bytes
 
 ## ReqGiveOffer
 
@@ -38,9 +42,9 @@ The maker responds to the taker's `ReqGiveOffer` message with an `RespOffer` mes
 
 ```rust
 {
-    absolute_fee_sat: Amount,
-    amount_relative_fee_ppb: Amount,
-    time_relative_fee_ppb: Amount,
+    absolute_fee_sat: Amount(u64),
+    amount_relative_fee_ppb: Amount(u64),
+    time_relative_fee_ppb: Amount(u64),
     required_confirms: u64,
     minimum_locktime: u16,
     max_size: u64,
@@ -49,6 +53,19 @@ The maker responds to the taker's `ReqGiveOffer` message with an `RespOffer` mes
     fidelity: FidelityProof,
 }
 ```
+
+**Fidelity Proof**
+
+```rust
+{
+    pub bond: FidelityBond,
+    pub cert_hash: Hash,
+    pub cert_sig: bitcoin::secp256k1::ecdsa::Signature,
+}
+```
+
+**FidelityBond**
+
 
 ## ReqContractSigsForSender
 

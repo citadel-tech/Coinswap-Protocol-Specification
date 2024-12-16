@@ -18,9 +18,13 @@ Coinswap can be implemented in two main forms, each serving different privacy ne
 
 ## Technical Innovation and Market Impact
 
-Following Bitcoin's Taproot activation, the protocol has evolved to potentially incorporate MuSig2, a Schnorr-based multisignature scheme that offers improved efficiency and security compared to traditional ECDSA-2P implementations. This technical advancement, combined with the protocol's trustless nature, has created new opportunities in the Bitcoin ecosystem.
+Following Bitcoin's Taproot activation, the protocol has evolved to potentially incorporate MuSig2, a Schnorr-based multisignature instead of the traditional multisignature scheme that offers improved efficiency. This technical advancement, combined with the protocol's trustless nature, has created new opportunities in the Bitcoin ecosystem.
 
-The protocol's market-driven approach ensures competitive maker fees and robust liquidity provision. Bitcoin holders can now earn returns by providing liquidity, creating a sustainable ecosystem that benefits both privacy-seeking users and those looking to generate yield on their holdings. The protocol's compatibility with the Lightning Network further extends its utility, enabling channel refills and enhancing the overall scalability of Bitcoin's second layer.
+The protocol's market-driven approach ensures competitive maker fees and robust liquidity provision. Bitcoin holders can now earn returns by providing liquidity, creating a sustainable ecosystem that benefits both privacy-seeking users and those looking to generate yield on their holdings.
+
+### Potential for cross-chain swaps
+
+While Coinswap is currently focused on intra-chain swaps within the Bitcoin network, the protocol's atomic nature and privacy-enhancing features could be extended to facilitate cross-chain swaps in the future. By enabling secure and private exchanges between different blockchains/sidechains without intermediaries, Coinswap could play a crucial role in enhancing interoperability and privacy.
 
 ## Impact on Bitcoin's Privacy Landscape
 
