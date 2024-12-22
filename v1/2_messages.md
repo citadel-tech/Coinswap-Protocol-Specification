@@ -2,6 +2,10 @@
 
 This section describes the messages exchanged between the participants in the Coinswap protocol. Each message is defined by its type, purpose, and the data it contains. The messages are categorized based on the role of the participant sending or receiving them, such as `TakerHello`, `MakerHello`, `ReqGiveOffer`, and so on.
 
+## Serialization
+
+The messages are serialized in CBOR(Cbor Object Representation) format, a binary data serialization format that is both compact and efficient. The CBOR format is used to encode the message data in a structured and standardized way, allowing for easy parsing and decoding by the participants.
+
 ## TakerHello
 
 This is the first interaction between the taker and the maker. The taker sends a `TakerHello` handshake message to the maker to initiate the swap process. The message contains the protocol version range supported by the taker, allowing the maker to determine compatibility.
@@ -13,7 +17,7 @@ This is the first interaction between the taker and the maker. The taker sends a
 }
 ```
 
-Approximate maximum message size: 8 bytes
+Maximum message data size: **8 bytes**
 
 ## MakerHello
 
@@ -26,7 +30,7 @@ The maker responds to the taker's `TakerHello` message with a `MakerHello` messa
 }
 ```
 
-Approximate maximum message size: 8 bytes
+Maximum message data size: **8 bytes**
 
 ## ReqGiveOffer
 
@@ -54,18 +58,32 @@ The maker responds to the taker's `ReqGiveOffer` message with an `RespOffer` mes
 }
 ```
 
+Maximum message data size: **144 bytes**
+
 **Fidelity Proof**
 
 ```rust
 {
-    pub bond: FidelityBond,
-    pub cert_hash: Hash,
-    pub cert_sig: bitcoin::secp256k1::ecdsa::Signature,
+    bond: FidelityBond,
+    cert_hash: Hash,
+    cert_sig: bitcoin::secp256k1::ecdsa::Signature,
 }
 ```
 
 **FidelityBond**
 
+```rust
+{
+    outpoint: OutPoint,
+    amount: Amount,
+    lock_time: LockTime,
+    pubkey: PublicKey,
+    // Height at which the bond was confirmed.
+    conf_height: u32,
+    // Cert expiry denoted in multiple of difficulty adjustment period (2016 blocks)
+    cert_expiry: u64,
+}
+```
 
 ## ReqContractSigsForSender
 
@@ -73,11 +91,13 @@ The taker sends a `ReqContractSigsForSender` message to the maker to request con
 
 ```rust
 {
-    pub txs_info: Vec<ContractTxInfoForSender>,
-    pub hashvalue: Hash160,
-    pub locktime: u16,
+    txs_info: Vec<ContractTxInfoForSender>,
+    hashvalue: Hash160,
+    locktime: u16,
 }
 ```
+
+Maximum message data size: **`No. of txs` * 198 + 22 bytes**
 
 ## RespContractSigsForSender
 
@@ -85,9 +105,11 @@ The maker responds to the taker's `ReqContractSigsForSender` message with a `Res
 
 ```rust
 {
-    pub sigs: Vec<Signature>,
+    sigs: Vec<Signature>,
 }
 ```
+
+Maximum message data size: **`No. of sigs` * 65 bytes**
 
 ## RespProofOfFunding
 
@@ -95,12 +117,14 @@ The taker sends a `RespProofOfFunding` message to the maker to provide proof of 
 
 ```rust
 {
-    pub confirmed_funding_txes: Vec<FundingTxInfo>,
-    pub next_coinswap_info: Vec<NextHopInfo>,
-    pub next_locktime: u16,
-    pub next_fee_rate: u64,
+    confirmed_funding_txes: Vec<FundingTxInfo>,
+    next_coinswap_info: Vec<NextHopInfo>,
+    next_locktime: u16,
+    next_fee_rate: u64,
 }
 ```
+
+Maximum message data size: **`No. of confirmed_funding_txes` * 234 + `No. of next_coinswap_info` * 130 + 10 bytes**
 
 ## ReqContractSigsAsRecvrAndSender
 
@@ -109,11 +133,13 @@ The maker sends a `ReqContractSigsAsRecvrAndSender` message to the taker to requ
 ```rust
 {
     /// Contract Tx by which this maker is receiving Coinswap.
-    pub receivers_contract_txs: Vec<Transaction>,
+    receivers_contract_txs: Vec<Transaction>,
     /// Contract Tx info by which this maker is sending Coinswap.
-    pub senders_contract_txs_info: Vec<SenderContractTxInfo>,
+    senders_contract_txs_info: Vec<SenderContractTxInfo>,
 }
 ```
+
+Maximum message data size: **`No. of receivers_contract_txs` * 198 + `No. of senders_contract_txs_info` * 198 bytes**
 
 ## ReqContractSigsForRecvr
 
@@ -121,9 +147,11 @@ The taker sends a `ReqContractSigsForRecvr` message to the maker to request cont
 
 ```rust
 {
-    pub txs: Vec<ContractTxInfoForRecvr>,
+    txs: Vec<ContractTxInfoForRecvr>,
 }
 ```
+
+Maximum message data size: **`No. of tx` * 165 bytes**
 
 ## RespContractSigsForRecvr
 
@@ -131,9 +159,11 @@ The maker responds to the taker's `ReqContractSigsForRecvr` message with a `Resp
 
 ```rust
 {
-    pub sigs: Vec<Signature>,
+    sigs: Vec<Signature>,
 }
 ```
+
+Maximum message data size: **`No. of sigs` * 65 bytes**
 
 ## RespContractSigsForRecvrAndSender
 
@@ -142,11 +172,13 @@ The taker responds to the maker's `ReqContractSigsAsRecvrAndSender` message with
 ```rust
 {
     /// Sigs from previous peer for Contract Tx of previous hop, (coinswap received by this Maker).
-    pub receivers_sigs: Vec<Signature>,
+    receivers_sigs: Vec<Signature>,
     /// Sigs from the next peer for Contract Tx of next hop, (coinswap sent by this Maker).
-    pub senders_sigs: Vec<Signature>,
+    senders_sigs: Vec<Signature>,
 }
 ```
+
+Maximum message data size: **`No. of receivers_sigs` * 65 + `No. of senders_sigs` * 65 bytes**
 
 ## RespHashPreimage
 
@@ -154,11 +186,13 @@ The taker sends a `RespHashPreimage` message to the maker to provide the hash pr
 
 ```rust
 {
-    pub senders_multisig_redeemscripts: Vec<ScriptBuf>,
-    pub receivers_multisig_redeemscripts: Vec<ScriptBuf>,
-    pub preimage: [u8; 32],
+    senders_multisig_redeemscripts: Vec<ScriptBuf>,
+    receivers_multisig_redeemscripts: Vec<ScriptBuf>,
+    preimage: [u8; 32],
 }
 ```
+
+Maximum message data size: **`No. of senders_multisig_redeemscripts` * 71 + `No. of receivers_multisig_redeemscripts` * 71 + 32 bytes**
 
 ## RespPrivKeyHandover
 
@@ -166,6 +200,17 @@ This message is sent by both the taker and the maker to complete the swap. It co
 
 ```rust
 {
-    pub multisig_privkeys: Vec<MultisigPrivkey>,
+    multisig_privkeys: Vec<MultisigPrivkey>,
+}
+```
+
+Maximum message data size: **`No. of multisig_privkeys` * 135 bytes**
+
+**MultisigPrivkey**
+
+```rust
+{
+    multisig_redeemscript: ScriptBuf,
+    key: SecretKey,
 }
 ```

@@ -1,6 +1,8 @@
 # Introduction to Coinswap
 
-Coinswap is a protocol in Bitcoin that enables trustless, decentralized coin swaps between parties without requiring intermediaries. Originally proposed by Greg Maxwell in 2013 on bitcointalk.org, the protocol has evolved significantly, with Chris Belcher introducing important improvements in 2020 through the bitcoin-dev mailing list.
+Coinswap is a protocol in Bitcoin that enables trustless, decentralized atomic swaps between parties without requiring intermediaries. Originally proposed in a [post by Greg Maxwell](https://bitcointalk.org/index.php?topic=321228.0) in 2013 on bitcointalk.org, the protocol has evolved significantly, with Chris Belcher introducing important improvements in 2020 through the bitcoin-dev mailing list.
+
+This documentation covers the technical details of the protocol. This introduction contains an overview of what Coinswap is, a high-level picture of how it works and the potential impact. [Architecture](./1_architecture.md) contains a more detailed view of the protocol's components and participants, while [Protocol Flow](./3_protocol-flow.md) provides a step-by-step guide to the process of a Coinswap transaction. [Fidelity](./4_fidelity.md) explains the concept of fidelity bonds and their role in the protocol, and [Fees](./5_fees.md) outlines the fee structure.[Security](./6_security.md) discusses the security considerations.
 
 ## What is Coinswap?
 
@@ -18,18 +20,8 @@ Coinswap can be implemented in two main forms, each serving different privacy ne
 
 ## Technical Innovation and Market Impact
 
-Following Bitcoin's Taproot activation, the protocol has evolved to potentially incorporate MuSig2, a Schnorr-based multisignature instead of the traditional multisignature scheme that offers improved efficiency. This technical advancement, combined with the protocol's trustless nature, has created new opportunities in the Bitcoin ecosystem.
-
 The protocol's market-driven approach ensures competitive maker fees and robust liquidity provision. Bitcoin holders can now earn returns by providing liquidity, creating a sustainable ecosystem that benefits both privacy-seeking users and those looking to generate yield on their holdings.
 
-### Potential for cross-chain swaps
-
-While Coinswap is currently focused on intra-chain swaps within the Bitcoin network, the protocol's atomic nature and privacy-enhancing features could be extended to facilitate cross-chain swaps in the future. By enabling secure and private exchanges between different blockchains/sidechains without intermediaries, Coinswap could play a crucial role in enhancing interoperability and privacy.
-
 ## Impact on Bitcoin's Privacy Landscape
-
-Coinswap represents a significant advancement in Bitcoin's privacy infrastructure. By enabling trustless swaps that are indistinguishable from regular transactions, the protocol contributes to the overall fungibility of Bitcoin. This privacy enhancement occurs without requiring consensus changes or complex coordination between participants, making it an immediately applicable solution for improving Bitcoin's privacy characteristics.
-
-The protocol's ability to operate seamlessly within the existing Bitcoin network while providing enhanced privacy features makes it a valuable tool for users seeking to maintain their financial privacy. As the Bitcoin ecosystem continues to evolve, Coinswap stands as a testament to the network's ability to support sophisticated privacy-preserving mechanisms through clever cryptographic constructions and market-driven incentives.
 
 Through its innovative design and practical implementation, Coinswap demonstrates how privacy enhancements can be achieved without sacrificing the fundamental principles of trustlessness and decentralization that make Bitcoin valuable. As the protocol continues to mature and gain adoption, it promises to play an increasingly important role in preserving user privacy and enhancing Bitcoin's fungibility.

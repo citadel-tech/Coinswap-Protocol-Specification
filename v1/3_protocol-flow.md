@@ -5,5 +5,5 @@ This section outlines the step-by-step process of a Coinswap transaction, detail
 We will showcase the protocol flow in a scenario where we have one taker(Alice) and two makers(Bob and Charlie).
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/905e282e-3ed9-40f5-a5dc-ce3cb9fd9542" />
+  <img src="https://github.com/user-attachments/assets/be9afed4-a73a-4d8a-b5a7-c6ec0faa3319" />
 </div>
