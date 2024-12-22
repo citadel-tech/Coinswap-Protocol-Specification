@@ -8,14 +8,11 @@ The Coinswap Protocol enables participants to securely and privately swap digita
 
 ## Contents
 
-- **[Introduction](docs/introduction.md)**: Overview of the protocol's goals, motivations, and key features.
-- **[Architecture](docs/architecture.md)**: Explanation of the protocol’s components, including atomic swaps, hashed time-locked contracts (HTLCs), and multi-party computation.
-- **[Protocol Flow](docs/protocol_flow.md)**: Step-by-step breakdown of the Coinswap process, from peer discovery to atomic execution.
-- **[Privacy Mechanisms](docs/privacy.md)**: Details on how Coinswap achieves transaction privacy and obfuscation.
-- **[Security Model](docs/security.md)**: Explanation of the protocol's security assumptions, threat model, and mechanisms for counterparty protection.
-- **[Implementation Guide](docs/implementation.md)**: Guidance on implementing Coinswap, including setup, dependencies, and configuration.
-- **[Glossary](docs/glossary.md)**: Definitions of key terms and concepts in the protocol.
+All the protocol documentation files for the first version are located in the [v1](v1) directory. The documentation is divided into the following sections:
 
-## Getting Started
-
-To start exploring the Coinswap Protocol, we recommend beginning with the [Introduction](docs/introduction.md) and [Architecture](docs/architecture.md) sections, which provide foundational knowledge of the protocol and its goals.
+1. [Introduction](v1/0_introduction.md): An overview of the Coinswap Protocol, its history, and its core features.
+2. [Architecture](v1/1_architecture.md): An explanation of the protocol’s architecture, participants, and transaction types.
+3. [Protocol Flow](v1/3_protocol-flow.md): A detailed description of the step-by-step process of a Coinswap transaction.
+4. [Fidelity](v1/4_fidelity.md): A detailed description of fidelity bonds and their role in the protocol.
+5. [Fees](v1/5_fees.md): An overview of the fee structure in the Coinswap Protocol.
+6. [Security](v1/6_security.md): A discussion of the security considerations in the Coinswap Protocol.
