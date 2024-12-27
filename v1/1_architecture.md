@@ -28,6 +28,8 @@ The foundation of Coinswap rests on two primary transaction types that work in c
 
 These transactions lock coins in 2-of-2 multisig outputs, ensuring that the funds are secure and available for the swap process. Funding transactions are the initial step in the swap process and establish the foundation for the subsequent contract transactions.
 
+![Funding transaction](images/funding_transaction.png)
+
 The redeem scripts for the funding transactions are constructed as follows:
 
 ```shell
@@ -37,6 +39,8 @@ OP_PUSHNUM_2 <PubKey1> <PubKey2> OP_PUSHNUM_2 OP_CHECKMULTISIG
 ### Contract Transactions
 
 These transactions establish time-locked redemption conditions and serve as the mechanism for completing the swap. Contract transactions include hash preimages that act as cryptographic proofs, ensuring atomic execution of the swap process. The completion of the swap involves the exchange of private keys, finalizing the transaction.
+
+![Contract Transaction](images/contract_transaction.png)
 
 The redeem scripts for the contract transactions are constructed as follows:
 
