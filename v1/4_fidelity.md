@@ -91,3 +91,7 @@ This structure is sent to the Taker in the [`RespOffer` message](./2_messages.md
 ### Verification
 
 Any party can verify the fidelity bond with the `Fidelity Proof` by reconstructing and matching the Bond Certificate Hash, the P2WSH address and validating that the signature corresponds to the public key in the `Fidelity Bond`.
+
+## Redeeming Fidelity Bond
+
+When the locktime of the fidelity bond expires, the maker can redeem the fidelity bond by spending the output to a new address.
