@@ -46,10 +46,10 @@ The maker responds to the taker's `ReqGiveOffer` message with an `RespOffer` mes
 
 ```rust
 {
-    absolute_fee_sat: Amount(u64),
-    amount_relative_fee_ppb: Amount(u64),
-    time_relative_fee_ppb: Amount(u64),
-    required_confirms: u64,
+    base_fee: u64,
+    amount_relative_fee_pct: f64,
+    time_relative_fee_pct: f64,
+    required_confirms: u32,
     minimum_locktime: u16,
     max_size: u64,
     min_size: u64,
@@ -75,13 +75,15 @@ Maximum message data size: **144 bytes**
 ```rust
 {
     outpoint: OutPoint,
+    /// Fidelity Amount
     amount: Amount,
+    /// Fidelity Locktime
     lock_time: LockTime,
     pubkey: PublicKey,
     // Height at which the bond was confirmed.
-    conf_height: u32,
+    conf_height: Option<u32>,
     // Cert expiry denoted in multiple of difficulty adjustment period (2016 blocks)
-    cert_expiry: u64,
+    cert_expiry: Option<u32>,
 }
 ```
 
@@ -119,8 +121,9 @@ The taker sends a `RespProofOfFunding` message to the maker to provide proof of 
 {
     confirmed_funding_txes: Vec<FundingTxInfo>,
     next_coinswap_info: Vec<NextHopInfo>,
-    next_locktime: u16,
-    next_fee_rate: u64,
+    refund_locktime: u16,
+    contract_feerate: u64,
+    id: String,
 }
 ```
 
@@ -175,6 +178,8 @@ The taker responds to the maker's `ReqContractSigsAsRecvrAndSender` message with
     receivers_sigs: Vec<Signature>,
     /// Sigs from the next peer for Contract Tx of next hop, (coinswap sent by this Maker).
     senders_sigs: Vec<Signature>,
+    /// Unique ID for a swap
+    id: String,
 }
 ```
 
