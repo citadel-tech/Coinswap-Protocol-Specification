@@ -23,13 +23,13 @@ In case the Taker doesn't find any more makers, it will abort the swap and recla
 
 ### 3. Maker Drops After Setup
 
-**Case I**: Maker closes connection after receiving a `ContractSigsForRecvrAndSender` and doesn't broadcasts it's funding txs.
+**Case I**: Maker closes connection after receiving a `ContractSigsForRecvrAndSender` and doesn't broadcast its funding txs.
 The Taker will wait until a timeout and start recovery after that.
 
 **Case II**: Maker closes connection after sending a `ContractSigsForRecvr`. Funding txs are already broadcasted.
 Taker waits for the response until timeout and aborts if the Maker doesn't show up.
 
-**Case III**:Maker closes connection at hash preimage handling. Funding txs are already broadcasted.
+**Case III**: Maker closes connection at hash preimage handling. Funding txs are already broadcasted.
 Taker waits for the response until timeout; Aborts if the Maker doesn't show up.
 
 ## Malice

@@ -4,7 +4,7 @@ This section describes the messages exchanged between the participants in the Co
 
 ## Serialization
 
-The messages are serialized in CBOR(Cbor Object Representation) format, a binary data serialization format that is both compact and efficient. The CBOR format is used to encode the message data in a structured and standardized way, allowing for easy parsing and decoding by the participants.
+The messages are serialized in CBOR (Concise Binary Object Representation) format, a binary data serialization format that is both compact and efficient. The CBOR format is used to encode the message data in a structured and standardized way, allowing for easy parsing and decoding by the participants.
 
 ## TakerHello
 

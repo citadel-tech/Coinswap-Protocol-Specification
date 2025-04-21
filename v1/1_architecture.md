@@ -9,7 +9,7 @@ The protocol operates through a series of transactions. These transactions are o
 The taker is the party that initiates the swap.
 They fetch the offers made by different makers, select the most suitable one, and proceed with the swap process. The taker pays the fees associated with the swap and ensures the completion of the transaction.
 
-The taker also serves as the intermediary between the makers, facilitating the exchange of messages and ensuring the smooth execution of the swap. This will be more clear in the [prtocol flow](./3_protocol-flow.md) section.
+The taker also serves as the intermediary between the makers, facilitating the exchange of messages and ensuring the smooth execution of the swap. This will be more clear in the [protocol flow](./3_protocol-flow.md) section.
 
 ```text
 Maker1 <----> Taker <----> Maker2
