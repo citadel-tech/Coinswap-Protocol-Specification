@@ -16,9 +16,9 @@ In the above transaction Alice sends coins to Maker Address 1 and the Maker give
 
 Privacy is improved because an observer of the blockchain cannot link Alice's Address to Bob's Address as there is no transaction between them.
 The only transactions on the blockchain are between Alice's Address and CoinSwap Address 1 and between CoinSwap Address 2 and Bob's Address.
-Therefore, CoinSwap breaks the transaction graph heuresisitc used by blockchain analysis tools.
+Therefore, CoinSwap breaks the transaction graph heuristic used by blockchain analysis tools.
 
-Another advantage of using CoinJoin is that the transactions blend in with the rest of bitcoin transactions.
+Another advantage of using CoinSwap is that the transactions blend in with the rest of bitcoin transactions.
 CoinSwap would provide much more privacy than existing equal-output CoinJoin implementations at a cheaper cost.
 
 ## Routed CoinSwap
@@ -67,7 +67,7 @@ CoinSwap Address 3 ----> Alice(2 BTC)
 CoinSwap Address 4 ----> Alice(1 BTC)
 ```
 
-Now Alice has received the entire amount from different unrelated transactions which makes correlating amounts execessively difficult.
+Now Alice has received the entire amount from different unrelated transactions which makes correlating amounts excessively difficult.
 
 ## Combining Routing with Multiple Transactions
 
