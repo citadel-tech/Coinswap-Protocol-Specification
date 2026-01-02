@@ -2,7 +2,8 @@
 
 The coinswap architecture involves two types of participants: makers and takers.
 Makers provide liquidity for the swap and compete to offer the best facilitation fee rates, while takers initiate swaps and pay fees.
-The protocol operates through a series of transactions. These transactions are of two types: funding transactions and contract transactions.
+
+The protocol operates through a series of transactions. These transactions are of two types in the V1 protocol(funding transactions and contract transactions). In V2 protocol we only have taproot based contract transactions.
 
 ## The Taker
 
