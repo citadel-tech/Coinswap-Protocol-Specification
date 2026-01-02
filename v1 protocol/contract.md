@@ -1,32 +1,4 @@
-# Architecture
-
-The architecture involves two types of participants: makers and takers.
-Makers provide liquidity for the swap and compete to offer the best facilitation fee rates, while takers initiate swaps and pay fees.
-The protocol operates through a series of transactions. These transactions are of two types: funding transactions and contract transactions.
-
-## Taker
-
-The taker is the party that initiates the swap.
-They fetch the offers made by different makers, select the most suitable one, and proceed with the swap process. The taker pays the fees associated with the swap and ensures the completion of the transaction.
-
-The taker also serves as the intermediary between the makers, facilitating the exchange of messages and ensuring the smooth execution of the swap. This will be more clear in the [protocol flow](./3_protocol-flow.md) section.
-
-```text
-Maker1 <----> Taker <----> Maker2
-```
-
-## Maker
-
-The maker is the party that provides liquidity and competes in the market to offer the best rates.
-Makers run servers that facilitate swaps and maintain market liquidity through a competitive fee structure.
-They respond to taker requests, lock funds in multisig outputs, and execute the swap process.
-
-## Directory Server
-
-The directory server acts as a lookup service that helps takers discover available makers and their offers.
-It provides information about the makers' liquidity, fees, and reputation, enabling takers to make informed decisions when selecting a maker for the swap.
-
-## Transactions
+# Contract and Funding Transactions
 
 The foundation of Coinswap rests on two primary transaction types that work in concert:
 

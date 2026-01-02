@@ -46,7 +46,7 @@ For a swap amount of 100,000 sats and a refund locktime of 20 blocks:
 
 ### 2) **Mining Fees**
 
-In addition to the Coinswap fees, the Taker is also responsible for paying the **Maker's mining fees**. These are the fees associated with the funding transactions that the Maker broadcasts as part of the coinswap. Each funding transaction requires a miner's fee to incentivize miners to include the transaction in a block. These fees are charge from the Taker and paid separately from the Coinswap fees.
+In addition to the Coinswap fees, the Taker is also responsible for paying the **transaction mining fees**. These are the fees associated with the funding transactions that are part of the coinswap protocol. Each funding transaction requires a miner's fee to incentivize miners to include the transaction in a block. These fees are charge from the Taker and paid separately from the Coinswap fees.
 
 > **Note**: Mining fees are **not** included in the calculation of the Coinswap fee itself.
 

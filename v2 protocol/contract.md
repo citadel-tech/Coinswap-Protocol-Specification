@@ -1,37 +1,14 @@
-# Architecture
+# Contract Transactions
+The foundation of Coinswap V2 protocol is built on top of a single `Contract Transaction` that includes both the mutlisig and HTLC logic in a single taproot tree.
 
-The Taproot Coinswap protocol enables privacy-preserving atomic swaps between a taker and multiple makers through Taproot contracts with MuSig2 aggregated signatures. Here, we outline the roles, transaction structure, contract composition, and swap flow.
+Unlike V1, V2 doesn't need a separate contract transaction. Reducing the fees of swap failure and recovation transaction, while reducing the number of messaging steps
+in the protocol and makes swaps faster.
 
-***
+The mutlisig is expressed with a 2of2 Musig2 in the taproot keypath spending.
 
-## Participants
-
-### Taker
-
-- Initiates the swap, selects and negotiates with makers.
-- Broadcasts the initial contract transaction.
-- Coordinates message flow in the protocol “cycle.”
-- Claims output at the cycle’s end.
-
-### Maker
-
-- Provides liquidity and responds to taker requests.
-- Locks funds in contract outputs.
-- Relays contract information as the cycle progresses.
-- Claims funds using provided preimages or after locktime expiry.
-
-***
-
-## Flow Overview
-
-Every swap consists of three core logical phases:
-1. **Discovery & Negotiation:** Roles select fees, sizes, timelock bounds, and cycle size.
-2. **Contract Creation (Cyclic):** Taproot outputs are established in a privacy-preserving “circle.”
-3. **Key Handover & Sweeping:** Outgoing contract keys are passed forward, enabling each participant to claim with MuSig2.
-
-Transaction and script construction is Taproot-native and enables both cooperative and fail-safe spending.
-
-***
+The HTLC is expressed as a taproot tree of two leaves.
+ - leaf 1: Timelocked to the sender.
+ - leaf 2: Hashlocked to the receiver.
 
 ## Transaction Types
 
