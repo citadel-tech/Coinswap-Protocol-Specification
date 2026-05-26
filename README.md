@@ -32,4 +32,5 @@ All other general documents that applies to both the protocols are as follows:
 3. [Fidelity](./general%20specs/fidelity.md): Explanation of fidelity bonds and their role in the protocol.
 4. [Fees](./general%20specs/fees.md): Overview of how fees are structured and accounted for within Coinswap transactions.
 5. [Security](./general%20specs/security.md): A discussion of the security considerations in the Coinswap Protocol.
-6. [privacy](./general%20specs/privacy.md): A discussion on how coinswap provides privacy.
+6. [Privacy](./general%20specs/privacy.md): A discussion on how coinswap provides privacy.
+7. [Tor Address Derivation](./general%20specs/tor-address.md): How a maker's Tor onion address is deterministically derived from the wallet master key.

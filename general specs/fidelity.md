@@ -43,6 +43,15 @@ bond_value = (locked_coins * (exp(interest_rate * locktime) - 1))^x
 4. After the locktime expires and the coins are free to move, the fidelity bond will continue to be valuable, but its value will exponentially drop following the interest rate.
    So it would be good for you as a maker to create a transaction with the UTXO spending it to another time-locked address, but it's not a huge rush (specifically, there's likely no need to pay massive miner fees, you can probably wait until fees are low).
 
+## Protocol Constants
+
+| Constant | Value | Description |
+|---|---|---|
+| `MIN_FIDELITY_TIMELOCK` | 12,960 blocks | Minimum lock duration (~3 months) |
+| `MAX_FIDELITY_TIMELOCK` | 25,920 blocks | Maximum lock duration (~6 months) |
+
+These bounds are enforced during verification — a bond whose relative lock duration falls outside this range is rejected.
+
 ## Fidelity Structure
 
 ### Fidelity Transaction
@@ -58,39 +67,101 @@ The redeem script for the fidelity output is constructed as follows:
 <pubkey> <OP_CHECKSIGVERIFY> <locktime> <OP_CLTV>
 ```
 
+The fidelity transaction also includes an OP_RETURN output encoding the maker's Tor address and bond locktime:
+
+```text
+{onion_address}#{locktime_height}
+```
+
+The `.onion` suffix is stripped before encoding — only the base address is stored. This serves as the canonical on-chain record. For discovery, makers also publish their fidelity details to Nostr relays.
+
 ### Bond Data
 
 The `Fidelity Bond` structure contains the following data:
 
 1. `outpoint`: The transaction ID and output index of the fidelity bond.
 2. `amount`: The amount of bitcoin locked in the fidelity bond.
-3. `lock_time`: The time at which the fidelity bond expires.
+3. `lock_time`: The absolute block height at which the fidelity bond expires.
 4. `pubkey`: The public key of the maker.
-5. `conf_height`: The height at which the fidelity bond was confirmed.
-6. `cert_expiry`: The expiry of the fidelity bond certificate.
+5. `conf_height`: The block height at which the fidelity bond was confirmed.
+6. `is_spent`: Whether the bond UTXO has been redeemed.
+7. `bond_index`: The child index used in the BIP32 derivation path `m/175'/2/<bond_index>`.
 
 ### Bond Certificate
 
-The `Fidelity Bond Certificate` is a message that contains the [Bond Data](#bond-data) in the following format:
+The `Fidelity Bond Certificate` is a message that binds the bond to a specific maker identity. It is formatted as:
 
 ```text
-fidelity-bond-cert|{outpoint}|{pubkey}|{cert_expiry}|{lock_time}|{amount}|{maker_address}
+fidelity-bond-cert|{outpoint}|{pubkey}|{lock_time}|{amount}|{onion_addr}|{tweakable_point}
 ```
 
-This certificate is used to link the `Fidelity Bond` to the maker's address.
+- `outpoint` — the bond UTXO (`txid:vout`)
+- `pubkey` — the bond's public key
+- `lock_time` — the absolute locktime (block height)
+- `amount` — the locked amount in satoshis
+- `onion_addr` — the maker's `.onion` address
+- `tweakable_point` — the maker's BIP32 identity public key (see [BIP32 Bond Ownership](#bip32-bond-ownership))
+
+The certificate hash is computed using Bitcoin's message signing convention:
+
+```text
+cert_hash = SHA256d("\x18Bitcoin Signed Message:\n" + varint(len(cert)) + cert)
+```
 
 ### Fidelity Proof
 
 The `Fidelity Proof` is a structure that contains all the data required to verify that a `Fidelity Bond` belongs to a specific maker.
 This structure is sent to the Taker in the [`RespOffer` message](./2_messages.md#respoffer). The Fidelity Proof contains:
 
-1. **Fidelity Bond** structure that has all the parameters of the bond.
-2. **Fidelity Bond Certificate Hash**: A double SHA256 hash of the `Fidelity Bond Certificate`
-3. **Signature**: The signature of the `Fidelity Bond Certificate Hash` signed by the same private key that corresponds to the public key in the `Fidelity Bond`.
+1. **Fidelity Bond** — the full `FidelityBond` structure.
+2. **Certificate Hash** — the double SHA256 hash of the certificate message (see above).
+3. **Signature** — an ECDSA signature over the certificate hash, signed by the private key corresponding to the bond's public key.
 
-### Verification
+## BIP32 Bond Ownership
 
-Any party can verify the fidelity bond with the `Fidelity Proof` by reconstructing and matching the Bond Certificate Hash, the P2WSH address and validating that the signature corresponds to the public key in the `Fidelity Bond`.
+Each fidelity bond's `pubkey` is derived deterministically from the maker's identity key (the `tweakable_point`) via BIP32. This cryptographically binds the bond to the maker's identity — a bond cannot be claimed by a different maker.
+
+Derivation path:
+
+```text
+m/175'/2/<bond_index>
+```
+
+The purpose code `175'` (BIP43 purpose `0x800000AF`) is taken from [BIP175 — Pay-to-Contract Protocol](https://github.com/bitcoin/bips/blob/master/bip-0175.mediawiki).
+
+During verification, the verifier constructs an `Xpub` from the tweakable point and its chain code (following the BIP175/Pay-to-Contract derivation convention), then derives the child key at path `[Normal(2), Normal(bond_index)]`. The derived public key must match the bond's public key.
+
+This ensures a maker cannot reuse another maker's bond.
+
+## Fidelity Verification
+
+Any party can verify a fidelity bond using the `FidelityProof` and the on-chain transaction. Verification consists of six checks performed in order:
+
+**Step 1 — Timelock range**
+
+Compute the relative lock duration: `lock_time - conf_height`. This must fall within `[MIN_FIDELITY_TIMELOCK, MAX_FIDELITY_TIMELOCK]` (12,960–25,920 blocks).
+
+**Step 2 — Bond not expired**
+
+`current_height` ≤ bond locktime. An expired bond is invalid.
+
+**Step 3 — Certificate hash integrity**
+
+Reconstruct the certificate string from the proof fields and re-compute the hash. The result must match the certificate hash carried in the proof.
+
+**Step 4 — BIP32 ownership**
+
+Derive the public key from the maker's tweakable point at path `[Normal(2), Normal(bond_index)]`. The derived key must match the bond's public key. This confirms the bond belongs to the claimed maker identity.
+
+**Step 5 — Script match**
+
+Derive the P2WSH redeem script from the bond's locktime and public key. The `scriptPubKey` of the on-chain output must match the derived script.
+
+**Step 6 — ECDSA signature**
+
+Verify the signature in the proof against the certificate hash using the bond's public key. This proves the maker controls the bond's private key.
+
+If all six checks pass, the fidelity proof is valid.
 
 ## Redeeming Fidelity Bond
 
