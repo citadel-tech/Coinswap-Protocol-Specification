@@ -24,23 +24,25 @@ Where:
 
 **Fee Parameters for Coinswap:**
 
-- **BASE_FEE**: A fixed fee charged by the Maker for their service with a default value of **1000**. This fee is constant and must be paid for any coinswap, regardless of other factors.
+- **BASE_FEE**: A fixed fee charged by the Maker for their service with a default value of **500 sats**. This fee is constant and must be paid for any coinswap, regardless of other factors.
 
-- **AMOUNT_RELATIVE_FEE_PCT**: A percentage fee based on the amount being swapped. The higher the amount, the higher the fee, reflecting increased transaction value and risk for the Maker. The default value is **2.50%**.
+- **AMOUNT_RELATIVE_FEE_PCT**: A percentage fee based on the amount being swapped. The higher the amount, the higher the fee, reflecting increased transaction value and risk for the Maker. The default value is **0.0025%**.
 
-- **TIME_RELATIVE_FEE_PCT**: A percentage fee based on the `refund locktime`. The longer the locktime, the higher the fee, reflecting the Maker's extended wait time to claim a refund in case of an unsuccessful coinswap. The default value is **0.10%**.
+- **TIME_RELATIVE_FEE_PCT**: A percentage fee based on the `refund locktime`. The longer the locktime, the higher the fee, reflecting the Maker's extended wait time to claim a refund in case of an unsuccessful coinswap. The default value is **0.0001%**.
 
 #### Fee Calculation Example:
 
 For a swap amount of 100,000 sats and a refund locktime of 20 blocks:
 
-- **BASE_FEE** = 1,000 sats
-- **Amount Relative Fee** = (100,000 \* 2.5) / 100 = 2,500 sats
-- **Time Relative Fee** = (100,000 _ 20 _ 0.1) / 100 = 2,000 sats
+- **BASE_FEE** = 500 sats
+- **Amount Relative Fee** = (100,000 \* 0.0025) / 100 = 2.5 sats
+- **Time Relative Fee** = (100,000 \* 20 \* 0.0001) / 100 = 2 sats
 
-**Total Fee:** = 1,000 + 2,500 + 2,000 = 5,500 sats
+The implementation rounds estimated fee components up to whole satoshis when displaying hop fees.
 
-> **Note**: The default fee rates are designed to asymptotically approach `5-10%` of the swap amount as the swap amount and refund locktime increase.
+**Total Fee:** = 500 + 3 + 2 = 505 sats
+
+> **Note**: These defaults intentionally keep maker quote fees low. Mining fees are not included in the Coinswap fee calculation and vary with transaction shape and feerate.
 
 ---
 
