@@ -7,17 +7,17 @@ The current version is a simple implementation of this fidelity bond concept.
 ## Sybil Attacks
 
 A Sybil attack is a type of attack where a single entity creates multiple fake identities to gain control of a network.
-In the context of Coinswap, a malicious actor could host multiple maker servers and gain an unfair advantage in the swap process.
+In the context of OpenSwap, a malicious actor could host multiple maker servers and gain an unfair advantage in the swap process.
 To prevent Sybil attacks, the protocol introduces the concept of **fidelity bonds**.
 
 ## What are Fidelity Bonds?
 
 A fidelity bond is a mechanism in which a user deliberately locks a certain amount of bitcoin, making it costly to create a new cryptographic identity.
 The lockup is done in such a way that its value can be publicly verified.
-In the Coinswap process, takers are more likely to initiate coinswaps with makers who have staked more valuable fidelity bonds.
+In the OpenSwap process, takers are more likely to initiate openswaps with makers who have staked more valuable fidelity bonds.
 This makes Sybil attacks significantly more expensive because an attacker would need to lock up a large amount of bitcoin to frequently be chosen as a counterparty in the swaps.
 
-For makers, locking bitcoin as a fidelity bond can increase their participation in coinswaps and, consequently, their fee earnings.
+For makers, locking bitcoin as a fidelity bond can increase their participation in openswaps and, consequently, their fee earnings.
 The most practical way to establish a fidelity bond is by sending bitcoin to a time-locked address using the opcode [OP_CHECKLOCKTIMEVERIFY](https://en.bitcoin.it/wiki/Timelock#CheckLockTimeVerify).
 In this case, the "sacrifice" comes from the time-value of money, as the bitcoin is locked and unusable for a period.
 However, long-term bitcoin holders (or hodlers) can create time-locked fidelity bonds at minimal cost, assuming they don’t plan to use their funds for transactions in the near future.

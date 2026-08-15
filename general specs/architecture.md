@@ -1,6 +1,6 @@
 # Architecture
 
-The coinswap architecture involves two types of participants: makers and takers.
+The openswap architecture involves two types of participants: makers and takers.
 Makers provide liquidity for the swap and compete to offer the best facilitation fee rates, while takers initiate swaps and pay fees.
 
 The protocol operates through a series of transactions. These transactions are of two types in the V1 protocol(funding transactions and contract transactions). In V2 protocol we only have taproot based contract transactions.
@@ -22,7 +22,7 @@ The maker is the party that provides liquidity and competes in the market to off
 Makers run servers that facilitate swaps and maintain market liquidity through a competitive fee structure.
 They respond to taker requests, lock funds in multisig outputs, and execute the swap process.
 
-Anyone with a Bitcoin fullnode access, and dedicated home server can participate in the Coinswap market as a maker.
+Anyone with a Bitcoin fullnode access, and dedicated home server can participate in the OpenSwap market as a maker.
 
 ## The Marketplace 
 

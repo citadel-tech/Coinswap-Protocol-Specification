@@ -1,6 +1,6 @@
 # Messages
 
-This section describes the messages exchanged between the participants in the Coinswap protocol. Each message is defined by its type, purpose, and the data it contains. The messages are categorized based on the role of the participant sending or receiving them, such as `TakerHello`, `MakerHello`, `ReqGiveOffer`, and so on.
+This section describes the messages exchanged between the participants in the OpenSwap protocol. Each message is defined by its type, purpose, and the data it contains. The messages are categorized based on the role of the participant sending or receiving them, such as `TakerHello`, `MakerHello`, `ReqGiveOffer`, and so on.
 
 ## Serialization
 
@@ -115,19 +115,19 @@ Maximum message data size: **`No. of sigs` * 65 bytes**
 
 ## RespProofOfFunding
 
-The taker sends a `RespProofOfFunding` message to the maker to provide proof of funding for the swap. This message contains the confirmed funding transactions, the next Coinswap information, the next locktime, and the next fee rate.
+The taker sends a `RespProofOfFunding` message to the maker to provide proof of funding for the swap. This message contains the confirmed funding transactions, the next OpenSwap information, the next locktime, and the next fee rate.
 
 ```rust
 {
     confirmed_funding_txes: Vec<FundingTxInfo>,
-    next_coinswap_info: Vec<NextHopInfo>,
+    next_openswap_info: Vec<NextHopInfo>,
     refund_locktime: u16,
     contract_feerate: u64,
     id: String,
 }
 ```
 
-Maximum message data size: **`No. of confirmed_funding_txes` * 234 + `No. of next_coinswap_info` * 130 + 10 bytes**
+Maximum message data size: **`No. of confirmed_funding_txes` * 234 + `No. of next_openswap_info` * 130 + 10 bytes**
 
 ## ReqContractSigsAsRecvrAndSender
 
@@ -135,9 +135,9 @@ The maker sends a `ReqContractSigsAsRecvrAndSender` message to the taker to requ
 
 ```rust
 {
-    /// Contract Tx by which this maker is receiving Coinswap.
+    /// Contract Tx by which this maker is receiving OpenSwap.
     receivers_contract_txs: Vec<Transaction>,
-    /// Contract Tx info by which this maker is sending Coinswap.
+    /// Contract Tx info by which this maker is sending OpenSwap.
     senders_contract_txs_info: Vec<SenderContractTxInfo>,
 }
 ```
@@ -174,9 +174,9 @@ The taker responds to the maker's `ReqContractSigsAsRecvrAndSender` message with
 
 ```rust
 {
-    /// Sigs from previous peer for Contract Tx of previous hop, (coinswap received by this Maker).
+    /// Sigs from previous peer for Contract Tx of previous hop, (openswap received by this Maker).
     receivers_sigs: Vec<Signature>,
-    /// Sigs from the next peer for Contract Tx of next hop, (coinswap sent by this Maker).
+    /// Sigs from the next peer for Contract Tx of next hop, (openswap sent by this Maker).
     senders_sigs: Vec<Signature>,
     /// Unique ID for a swap
     id: String,

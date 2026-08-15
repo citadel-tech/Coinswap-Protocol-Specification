@@ -1,7 +1,7 @@
 # Security
 
 In order to keep the protocol secure, we need to mitigate the risks associated with malicious actors and the risk of losing funds.
-This section outlines the security measures in place to protect the integrity of the Coinswap protocol, the possible abort scenarios and the mechanisms to prevent them or penalize the malicious actors.
+This section outlines the security measures in place to protect the integrity of the OpenSwap protocol, the possible abort scenarios and the mechanisms to prevent them or penalize the malicious actors.
 
 ## Aborts
 
@@ -12,7 +12,7 @@ An abort is a scenario where one of the participants in the swap process fails t
 This is the situation where the Taker drops connection after broadcasting all the funding transactions.
 The Makers identifies this and waits for a timeout for the Taker to come back.
 If the Taker doesn't come back within timeout, the Makers broadcasts the contract transactions and reclaims their funds via timelock.
-The Taker after coming live again will see unfinished coinswaps in his wallet. He can reclaim his funds via broadcasting his contract transactions and claiming via timelock.
+The Taker after coming live again will see unfinished openswaps in his wallet. He can reclaim his funds via broadcasting his contract transactions and claiming via timelock.
 
 ### 2. Maker Drops Before Setup
 
@@ -46,4 +46,4 @@ The Taker and other Makers identify the situation and gets their money back via 
 
 ## Sybil attacks
 
-A Sybil attack is a type of attack where a single entity creates multiple fake identities to gain control of the network. In the context of Coinswap, a malicious actor could host multiple maker servers and gain an unfair advantage in the swap process. To prevent Sybil attacks, the protocol introduces the concept of [**fidelity**](./4_fidelity.md).
+A Sybil attack is a type of attack where a single entity creates multiple fake identities to gain control of the network. In the context of OpenSwap, a malicious actor could host multiple maker servers and gain an unfair advantage in the swap process. To prevent Sybil attacks, the protocol introduces the concept of [**fidelity**](./4_fidelity.md).

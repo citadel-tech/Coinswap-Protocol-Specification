@@ -1,6 +1,6 @@
 # Messages
 
-This section describes the messages exchanged between participants in the Taproot Coinswap protocol. Each message is defined by its type, purpose, and the data it contains. Messages are categorized by protocol phase and sender/receiver role.
+This section describes the messages exchanged between participants in the Taproot OpenSwap protocol. Each message is defined by its type, purpose, and the data it contains. Messages are categorized by protocol phase and sender/receiver role.
 ***
 
 ## Phase 1: Discovery & Negotiation

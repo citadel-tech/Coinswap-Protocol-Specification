@@ -1,6 +1,6 @@
 # Tor Address Derivation
 
-Every Maker in the Coinswap network is reachable via a Tor hidden service. The `.onion` address is derived **deterministically** from the wallet's BIP32 master key. This means that the same wallet always produces the same Tor address — no separate key material needs to be stored, backed up, or managed.
+Every Maker in the OpenSwap network is reachable via a Tor hidden service. The `.onion` address is derived **deterministically** from the wallet's BIP32 master key. This means that the same wallet always produces the same Tor address — no separate key material needs to be stored, backed up, or managed.
 
 ## Source Key
 
@@ -53,7 +53,7 @@ tor_private_key = "ED25519-V3:" + base64(64-byte key)
 **Control port command**:
 
 ```text
-ADD_ONION {tor_private_key} Flags=Detach Port={COINSWAP_PORT},127.0.0.1:{local_port}
+ADD_ONION {tor_private_key} Flags=Detach Port={OPENSWAP_PORT},127.0.0.1:{local_port}
 ```
 
 Tor responds with:
@@ -97,5 +97,5 @@ WalletStore::master_key (Xpriv)
 
 - [RFC 8032 §5.1.5](https://www.rfc-editor.org/rfc/rfc8032#section-5.1.5) — Ed25519 key generation: SHA-512 hash and clamping procedure
 - [SLIP-10 Test Vector 1 for Ed25519](https://github.com/satoshilabs/slips/blob/master/slip-0010.md#test-vector-1-for-ed25519) — seed → Ed25519 private key derivation test data
-- [SLIP-10](https://github.com/satoshilabs/slips/blob/master/slip-0010.md) — HD key derivation for Ed25519 (coinswap derives directly from the BIP32 master key rather than a SLIP-10 path)
+- [SLIP-10](https://github.com/satoshilabs/slips/blob/master/slip-0010.md) — HD key derivation for Ed25519 (openswap derives directly from the BIP32 master key rather than a SLIP-10 path)
 - [Tor control port spec — ADD_ONION](https://spec.torproject.org/control-spec/commands.html#add_onion) — `ED25519-V3` key format and ephemeral hidden service registration

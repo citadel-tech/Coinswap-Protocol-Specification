@@ -1,6 +1,6 @@
 # Contract and Funding Transactions
 
-The foundation of Coinswap rests on two primary transaction types that work in concert:
+The foundation of OpenSwap rests on two primary transaction types that work in concert:
 
 ### Funding Transactions
 
@@ -73,7 +73,7 @@ All the contract transactions in the swap require this hashpreimage to be redeem
 
 ### Staggered Timelocks
 
-Like the Lightning Network, Coinswap uses staggered timelocks to ensure the atomic execution of the swap process.
+Like the Lightning Network, OpenSwap uses staggered timelocks to ensure the atomic execution of the swap process.
 The timelocks are set at different intervals. The staggered timelocks prevent the risk of partial trades or asset loss. Every subsequent maker in the swap has a shorter timelock than the previous maker.
 
 ### Swap Completion

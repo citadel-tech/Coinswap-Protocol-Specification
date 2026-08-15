@@ -1,5 +1,5 @@
 # Contract Transactions
-The foundation of Coinswap V2 protocol is built on top of a single `Contract Transaction` that includes both the mutlisig and HTLC logic in a single taproot tree.
+The foundation of OpenSwap V2 protocol is built on top of a single `Contract Transaction` that includes both the mutlisig and HTLC logic in a single taproot tree.
 
 Unlike V1, V2 doesn't need a separate contract transaction. Reducing the fees of swap failure and recovation transaction, while reducing the number of messaging steps
 in the protocol and makes swaps faster.
@@ -140,7 +140,7 @@ let msg = Message::from(sighash);
 The swap fee is computed by:
 
 ```rust
-fn calculate_coinswap_fee(
+fn calculate_openswap_fee(
     swap_amount: u64,
     refund_locktime: u16,
     base_fee: u64,
