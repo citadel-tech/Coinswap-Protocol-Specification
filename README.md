@@ -34,3 +34,4 @@ All other general documents that applies to both the protocols are as follows:
 5. [Security](./general%20specs/security.md): A discussion of the security considerations in the OpenSwap Protocol.
 6. [Privacy](./general%20specs/privacy.md): A discussion on how openswap provides privacy.
 7. [Tor Address Derivation](./general%20specs/tor-address.md): How a maker's Tor onion address is deterministically derived from the wallet master key.
+8. [Funding-Source Blocklist](./general%20specs/blocklist.md): How a participant can refuse a swap based on where the counterparty's coins came from.

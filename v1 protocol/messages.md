@@ -144,6 +144,25 @@ The maker sends a `ReqContractSigsAsRecvrAndSender` message to the taker to requ
 
 Maximum message data size: **`No. of receivers_contract_txs` * 198 + `No. of senders_contract_txs_info` * 198 bytes**
 
+**SenderContractTxInfo**
+
+```rust
+{
+    /// The maker's outgoing funding transaction, which pays to the multisig.
+    funding_tx: Transaction,
+    /// The sender's contract transaction, which spends the funding output.
+    contract_tx: Transaction,
+    timelock_pubkey: PublicKey,
+    multisig_redeemscript: ScriptBuf,
+    contract_redeemscript: ScriptBuf,
+    funding_amount: Amount,
+    multisig_nonce: SecretKey,
+    hashlock_nonce: SecretKey,
+}
+```
+
+`funding_tx` is supplied before the maker broadcasts it. The maker only broadcasts once it holds the taker's signatures on the contract transactions, so the taker sees the full funding transaction while it is still unbroadcast.
+
 ## ReqContractSigsForRecvr
 
 The taker sends a `ReqContractSigsForRecvr` message to the maker to request contract signatures for the receiver. This message contains the transaction details required for the contract signature.
